@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-box">
+  <h2>Welcome Back</h2>
+
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <div class="link">
+    <a href="register.html">Create account</a>
+  </div>
+</div>
+
+<script>
+if (localStorage.getItem("username")) {
+  window.location = "index.html";
+}
+
+function login() {
+  fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (!data.success) {
+      alert("Invalid credentials");
+      return;
+    }
+
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("role", data.role);
+
+    window.location =
+      data.role === "admin" ? "admin.html" : "index.html";
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">Admin Panel</div>
+    <div class="nav-right">
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="page">
+
+    <!-- STATS -->
+    <h2>Overview</h2>
+    <div class="grid" id="stats"></div>
+
+    <!-- CREATE SLOT -->
+    <h2 style="margin-top:50px;">Create Slot</h2>
+    <div class="card" style="max-width:700px; margin-bottom:50px;">
+      <div style="display:flex; gap:12px; margin-bottom:15px;">
+        <input id="date" placeholder="YYYY-MM-DD">
+        <input id="time" placeholder="10:00 AM">
+      </div>
+      <button class="primary" onclick="addSlot()">Add Slot</button>
+    </div>
+
+    <!-- BOOKINGS -->
+    <h2>All Bookings</h2>
+    <div class="card">
+      <div id="all" class="grid"></div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    // 🔐 Guard: only admin allowed
+    if (localStorage.getItem("role") !== "admin") {
+      window.location = "login.html";
+    }
+
+    // 📊 Load stats
+    function loadStats() {
+      fetch("http://localhost:3000/admin/stats")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("stats").innerHTML = `
+            <div class="card">
+              <span>📦 Total Slots</span>
+              <h2>${data.totalSlots}</h2>
+            </div>
+            <div class="card">
+              <span>✅ Booked</span>
+              <h2>${data.bookedSlots}</h2>
+            </div>
+            <div class="card">
+              <span>🟢 Available</span>
+              <h2>${data.totalSlots - data.bookedSlots}</h2>
+            </div>
+          `;
+        });
+    }
+
+    loadStats();
+
+    // ➕ Add slot
+    function addSlot() {
+      if (!date.value || !time.value) {
+        alert("Please fill date and time");
+        return;
+      }
+
+      fetch("http://localhost:3000/add-slot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: date.value,
+          time: time.value,
+          role: localStorage.getItem("role")
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+        date.value = "";
+        time.value = "";
+        loadStats(); // refresh stats
+      });
+    }
+
+    // 📋 Load bookings
+    fetch("http://localhost:3000/admin/bookings")
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById("all");
+
+        if (data.length === 0) {
+          div.innerHTML = `
+            <div class="card empty" style="max-width:500px; margin:auto;">
+              📭 No bookings yet
+            </div>
+          `;
+          return;
+        }
+
+        data.forEach(b => {
+          div.innerHTML += `
+            <div class="card">
+              <span>👤 ${b.user}</span>
+              <span>📅 ${b.date} • 🕒 ${b.time}</span>
+            </div>
+          `;
+        });
+      });
+
+    // 🚪 Logout
+    function logout() {
+      localStorage.clear();
+      window.location = "login.html";
+    }
+  </script>
+
+</body>
+</html>
