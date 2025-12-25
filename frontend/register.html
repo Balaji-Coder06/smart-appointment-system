@@ -1,49 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Register</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="auth-box">
-  <h2>Create Account</h2>
+  <div class="auth-box">
+    <h2>Create Account</h2>
 
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
 
-  <button onclick="register()">Register</button>
+    <button onclick="register()">Register</button>
 
-  <div class="link">
-    <a href="login.html">Already have an account?</a>
+    <div class="link">
+      <a href="login.html">Already have an account?</a>
+    </div>
   </div>
-</div>
 
-<script>
-if (localStorage.getItem("username")) {
-  window.location = "index.html";
-}
-
-function register() {
-  fetch("http://localhost:3000/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: username.value,
-      password: password.value
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (!data.success) {
-      alert(data.message);
-      return;
+  <script>
+    if (localStorage.getItem("username")) {
+      window.location = "index.html";
     }
-    alert("Registered successfully");
-    window.location = "login.html";
-  });
-}
-</script>
+
+    function register() {
+      fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: username.value,
+          password: password.value
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (!data.success) {
+            alert(data.message);
+            return;
+          }
+          alert("Registered successfully");
+          window.location = "login.html";
+        });
+    }
+  </script>
 
 </body>
+
 </html>

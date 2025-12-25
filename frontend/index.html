@@ -1,90 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Appointments</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="navbar">
-  <div class="logo">Smart Appointment</div>
-  <div class="nav-right">
-    <span id="user"></span>
-    <button onclick="toggleTheme()">🌙</button>
-    <button onclick="logout()">Logout</button>
+  <div class="navbar">
+    <div class="logo">Smart Appointment</div>
+    <div class="nav-right">
+      <span id="user"></span>
+      <button onclick="toggleTheme()">🌙</button>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
-</div>
 
-<div class="hero">
-  <h1>Book Smarter. No Conflicts.</h1>
-  <p>Real-time appointment scheduling with zero double bookings.</p>
-</div>
+  <div class="hero">
+    <h1>Book Smarter. No Conflicts.</h1>
+    <p>Real-time appointment scheduling with zero double bookings.</p>
+  </div>
 
 
-<div class="page">
-  <h2>Available Slots</h2>
-  <div id="slots" class="grid"></div>
-</div>
+  <div class="page">
+    <h2>Available Slots</h2>
+    <div id="slots" class="grid"></div>
+  </div>
 
-<script src="script.js"></script>
-<script>
-if (!localStorage.getItem("username")) {
-  window.location = "login.html";
-}
+  <script src="script.js"></script>
+  <script>
+    if (!localStorage.getItem("username")) {
+      window.location = "login.html";
+    }
 
-document.getElementById("user").innerText =
-  localStorage.getItem("username");
+    document.getElementById("user").innerText =
+      localStorage.getItem("username");
 
-function logout() {
-  localStorage.clear();
-  window.location = "login.html";
-}
+    function logout() {
+      localStorage.clear();
+      window.location = "login.html";
+    }
 
-loadSlots();
-function toggleTheme() {
-  document.body.classList.toggle("light");
-  localStorage.setItem(
-    "theme",
-    document.body.classList.contains("light") ? "light" : "dark"
-  );
-}
+    loadSlots();
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+      localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light") ? "light" : "dark"
+      );
+    }
 
-if (localStorage.getItem("theme") === "light") {
-  document.body.classList.add("light");
-}
-</script>
-<canvas id="bg"></canvas>
-<script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light");
+    }
+  </script>
+  <canvas id="bg"></canvas>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-const particles = Array.from({length: 80}, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  r: Math.random() * 2 + 0.5,
-  dx: Math.random() * 0.3,
-  dy: Math.random() * 0.3
-}));
+    const particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2 + 0.5,
+      dx: Math.random() * 0.3,
+      dy: Math.random() * 0.3
+    }));
 
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.5)";
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x > canvas.width) p.x = 0;
-    if (p.y > canvas.height) p.y = 0;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 
 </body>
+
 </html>

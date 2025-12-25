@@ -9,19 +9,18 @@
   z-index: -1;
 }
 
-
 :root {
   --bg: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
-  --card: rgba(255,255,255,0.08);
+  --card: rgba(255, 255, 255, 0.08);
   --text: #e5e7eb;
   --navbar: rgba(15, 23, 42, 0.85);
 }
 
 body.light {
   --bg: linear-gradient(120deg, #e0eafc, #cfdef3);
-  --card: rgba(255,255,255,0.95);
+  --card: rgba(255, 255, 255, 0.95);
   --text: #111827;
-  --navbar: rgba(255,255,255,0.85);
+  --navbar: rgba(255, 255, 255, 0.85);
 }
 
 body {
@@ -32,16 +31,15 @@ body {
   overflow-x: hidden;
 }
 
-/* ========== NAVBAR ========== */
 .navbar {
   height: 64px;
-  background: var(--navbar); 
+  background: var(--navbar);
   backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
 }
 
 .logo {
@@ -69,7 +67,6 @@ body {
   cursor: pointer;
 }
 
-/* ========== PAGE LAYOUT ========== */
 .page {
   max-width: 1200px;
   margin: 50px auto;
@@ -80,7 +77,6 @@ h2 {
   margin-bottom: 25px;
 }
 
-/* ========== GRID & CARDS ========== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -91,13 +87,13 @@ h2 {
   background: var(--card);
   border-radius: 14px;
   padding: 22px;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s, box-shadow 0.25s;
 }
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
 }
 
 .card span {
@@ -106,7 +102,6 @@ h2 {
   font-size: 15px;
 }
 
-/* ========== BUTTONS ========== */
 button.primary {
   width: 100%;
   padding: 11px;
@@ -133,14 +128,13 @@ button.secondary {
   cursor: pointer;
 }
 
-/* ========== AUTH FORMS ========== */
 .auth-box {
   max-width: 360px;
   margin: 120px auto;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   padding: 30px;
   border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .auth-box h2 {
@@ -172,7 +166,6 @@ button.secondary {
   opacity: 0.8;
 }
 
-/* ========== EMPTY STATE ========== */
 .empty {
   text-align: center;
   opacity: 0.7;
@@ -184,6 +177,7 @@ button.secondary {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -204,7 +198,7 @@ button.primary {
 
 button.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
 .hero {
@@ -222,65 +216,51 @@ button.primary:hover {
   font-size: 16px;
 }
 
-/* ===== ADMIN & DASHBOARD POLISH ===== */
-
-/* Center grids visually */
 .grid {
   justify-items: center;
 }
 
-/* Prevent card-inside-card heaviness */
 .card .card {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   box-shadow: none;
 }
 
-/* Better input styling */
 input {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   color: #111;
   font-size: 14px;
 }
 
 body.light input {
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
 }
 
-/* Improve empty state */
 .empty {
   font-size: 15px;
   opacity: 0.8;
 }
 
-/* Section spacing consistency */
-.page > h2 {
+.page>h2 {
   margin-bottom: 20px;
 }
 
-/* ===== FINAL DASHBOARD TUNING ===== */
-
-/* Make overview stats visible */
 #stats {
   margin-bottom: 50px;
 }
 
-/* Ensure stats cards stand out */
 #stats .card {
   min-width: 220px;
   text-align: center;
 }
 
-/* Reduce empty bookings height */
 #all {
   min-height: auto;
 }
 
-/* Bookings container should not feel heavy */
-.page > .card {
+.page>.card {
   padding: 20px;
 }
 
-/* Section rhythm */
 .page h2 {
   margin-top: 40px;
   margin-bottom: 20px;

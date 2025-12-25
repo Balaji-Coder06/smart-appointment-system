@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>My Bookings</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="navbar">
-  <div class="logo">My Bookings</div>
-  <div class="nav-right">
-    <button onclick="logout()">Logout</button>
+  <div class="navbar">
+    <div class="logo">My Bookings</div>
+    <div class="nav-right">
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
-</div>
 
-<div class="page">
-  <div id="list" class="grid"></div>
-</div>
+  <div class="page">
+    <div id="list" class="grid"></div>
+  </div>
 
-<script>
-const user = localStorage.getItem("username");
-if (!user) window.location = "login.html";
+  <script>
+    const user = localStorage.getItem("username");
+    if (!user) window.location = "login.html";
 
-fetch(`http://localhost:3000/my-bookings/${user}`)
-  .then(res => res.json())
-  .then(data => {
-    const list = document.getElementById("list");
-    if (data.length === 0) {
-      list.innerHTML = `<div class="empty">No bookings yet</div>`;
-      return;
-    }
+    fetch(`http://localhost:3000/my-bookings/${user}`)
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("list");
+        if (data.length === 0) {
+          list.innerHTML = `<div class="empty">No bookings yet</div>`;
+          return;
+        }
 
-    data.forEach(b => {
-      list.innerHTML += `
+        data.forEach(b => {
+          list.innerHTML += `
         <div class="card">
           <span>${b.date} • ${b.time}</span>
           <button class="secondary" onclick="cancel(${b.slotId})">
@@ -39,30 +41,31 @@ fetch(`http://localhost:3000/my-bookings/${user}`)
           </button>
         </div>
       `;
-    });
-  });
+        });
+      });
 
-function cancel(slotId) {
-  fetch("http://localhost:3000/cancel-booking", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: user,
-      slotId
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    alert(data.message);
-    location.reload();
-  });
-}
+    function cancel(slotId) {
+      fetch("http://localhost:3000/cancel-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: user,
+          slotId
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          location.reload();
+        });
+    }
 
-function logout() {
-  localStorage.clear();
-  window.location = "login.html";
-}
-</script>
+    function logout() {
+      localStorage.clear();
+      window.location = "login.html";
+    }
+  </script>
 
 </body>
+
 </html>

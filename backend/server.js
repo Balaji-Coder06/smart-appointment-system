@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ================= DATABASE =================
 const db = new sqlite3.Database("database.db");
 
 db.serialize(() => {
@@ -38,7 +37,6 @@ db.serialize(() => {
     )
   `);
 
-  // ✅ async admin creation (correct way)
   (async () => {
     const adminHash = await bcrypt.hash("admin123", 10);
 
@@ -52,7 +50,6 @@ db.serialize(() => {
   })();
 });
 
-// ================= AUTH =================
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -102,7 +99,6 @@ app.post("/register", async (req, res) => {
 });
 
 
-// ================= SLOTS =================
 app.get("/slots", (req, res) => {
   db.all(
     "SELECT * FROM slots WHERE is_available = 1",
@@ -114,7 +110,6 @@ app.get("/slots", (req, res) => {
   );
 });
 
-// ================= ADMIN =================
 app.post("/add-slot", (req, res) => {
   const { date, time, role } = req.body;
 
@@ -153,7 +148,6 @@ app.get("/admin/bookings", (req, res) => {
   );
 });
 
-// ================= BOOKINGS =================
 app.post("/book/:id", (req, res) => {
   const slotId = req.params.id;
   const { username } = req.body;
@@ -197,7 +191,6 @@ app.post("/cancel-booking", (req, res) => {
     return res.json({ message: "Invalid request" });
   }
 
-  // Check booking belongs to user
   db.get(
     "SELECT * FROM bookings WHERE slot_id = ? AND user = ?",
     [slotId, username],
@@ -206,12 +199,10 @@ app.post("/cancel-booking", (req, res) => {
         return res.json({ message: "Unauthorized cancel attempt" });
       }
 
-      // Delete booking
       db.run(
         "DELETE FROM bookings WHERE slot_id = ?",
         [slotId],
         () => {
-          // Make slot available again
           db.run(
             "UPDATE slots SET is_available = 1 WHERE id = ?",
             [slotId]
@@ -254,7 +245,6 @@ app.get("/admin/stats", (req, res) => {
 });
 
 
-// ================= SERVER =================
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
 });

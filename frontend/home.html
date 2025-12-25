@@ -1,70 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Smart Appointment</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="navbar">
-  <div class="logo">Smart Appointment</div>
-  <div class="nav-right">
-    <button onclick="location.href='login.html'">Login</button>
-    <button onclick="location.href='register.html'">Register</button>
+  <div class="navbar">
+    <div class="logo">Smart Appointment</div>
+    <div class="nav-right">
+      <button onclick="location.href='login.html'">Login</button>
+      <button onclick="location.href='register.html'">Register</button>
+    </div>
   </div>
-</div>
 
-<div class="hero">
-  <h1>Book Smarter. No Conflicts.</h1>
-  <p>Real-time appointment scheduling with zero double bookings.</p>
-</div>
-
-<div class="page grid">
-  <div class="card">
-    <h3>🚀 Fast Booking</h3>
-    <p>See real-time slot availability.</p>
+  <div class="hero">
+    <h1>Book Smarter. No Conflicts.</h1>
+    <p>Real-time appointment scheduling with zero double bookings.</p>
   </div>
-  <div class="card">
-    <h3>🔐 Secure</h3>
-    <p>Role-based admin and user access.</p>
+
+  <div class="page grid">
+    <div class="card">
+      <h3>🚀 Fast Booking</h3>
+      <p>See real-time slot availability.</p>
+    </div>
+    <div class="card">
+      <h3>🔐 Secure</h3>
+      <p>Role-based admin and user access.</p>
+    </div>
+    <div class="card">
+      <h3>📅 Smart Slots</h3>
+      <p>No more double bookings.</p>
+    </div>
   </div>
-  <div class="card">
-    <h3>📅 Smart Slots</h3>
-    <p>No more double bookings.</p>
-  </div>
-</div>
-<canvas id="bg"></canvas>
-<script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+  <canvas id="bg"></canvas>
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-const particles = Array.from({length: 80}, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  r: Math.random() * 2 + 0.5,
-  dx: Math.random() * 0.3,
-  dy: Math.random() * 0.3
-}));
+    const particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2 + 0.5,
+      dx: Math.random() * 0.3,
+      dy: Math.random() * 0.3
+    }));
 
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.5)";
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    if (p.x > canvas.width) p.x = 0;
-    if (p.y > canvas.height) p.y = 0;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 
 </body>
+
 </html>

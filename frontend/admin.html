@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
@@ -7,7 +8,6 @@
 
 <body>
 
-  <!-- NAVBAR -->
   <div class="navbar">
     <div class="logo">Admin Panel</div>
     <div class="nav-right">
@@ -15,14 +15,11 @@
     </div>
   </div>
 
-  <!-- PAGE CONTENT -->
   <div class="page">
 
-    <!-- STATS -->
     <h2>Overview</h2>
     <div class="grid" id="stats"></div>
 
-    <!-- CREATE SLOT -->
     <h2 style="margin-top:50px;">Create Slot</h2>
     <div class="card" style="max-width:700px; margin-bottom:50px;">
       <div style="display:flex; gap:12px; margin-bottom:15px;">
@@ -32,7 +29,6 @@
       <button class="primary" onclick="addSlot()">Add Slot</button>
     </div>
 
-    <!-- BOOKINGS -->
     <h2>All Bookings</h2>
     <div class="card">
       <div id="all" class="grid"></div>
@@ -40,14 +36,11 @@
 
   </div>
 
-  <!-- SCRIPT -->
   <script>
-    // 🔐 Guard: only admin allowed
     if (localStorage.getItem("role") !== "admin") {
       window.location = "login.html";
     }
 
-    // 📊 Load stats
     function loadStats() {
       fetch("http://localhost:3000/admin/stats")
         .then(res => res.json())
@@ -71,7 +64,6 @@
 
     loadStats();
 
-    // ➕ Add slot
     function addSlot() {
       if (!date.value || !time.value) {
         alert("Please fill date and time");
@@ -87,16 +79,15 @@
           role: localStorage.getItem("role")
         })
       })
-      .then(res => res.json())
-      .then(data => {
-        alert(data.message);
-        date.value = "";
-        time.value = "";
-        loadStats(); // refresh stats
-      });
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          date.value = "";
+          time.value = "";
+          loadStats();
+        });
     }
 
-    // 📋 Load bookings
     fetch("http://localhost:3000/admin/bookings")
       .then(res => res.json())
       .then(data => {
@@ -121,7 +112,6 @@
         });
       });
 
-    // 🚪 Logout
     function logout() {
       localStorage.clear();
       window.location = "login.html";
@@ -129,4 +119,5 @@
   </script>
 
 </body>
+
 </html>
