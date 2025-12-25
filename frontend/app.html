@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Smart Appointment</title>
+  <title>Appointments</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,8 +11,9 @@
   <div class="navbar">
     <div class="logo">Smart Appointment</div>
     <div class="nav-right">
-      <button onclick="location.href='login.html'">Login</button>
-      <button onclick="location.href='register.html'">Register</button>
+      <span id="user"></span>
+      <button onclick="toggleTheme()">🌙</button>
+      <button onclick="logout()">Logout</button>
     </div>
   </div>
 
@@ -21,20 +22,39 @@
     <p>Real-time appointment scheduling with zero double bookings.</p>
   </div>
 
-  <div class="page grid">
-    <div class="card">
-      <h3>🚀 Fast Booking</h3>
-      <p>See real-time slot availability.</p>
-    </div>
-    <div class="card">
-      <h3>🔐 Secure</h3>
-      <p>Role-based admin and user access.</p>
-    </div>
-    <div class="card">
-      <h3>📅 Smart Slots</h3>
-      <p>No more double bookings.</p>
-    </div>
+
+  <div class="page">
+    <h2>Available Slots</h2>
+    <div id="slots" class="grid"></div>
   </div>
+
+  <script src="script.js"></script>
+  <script>
+    if (!localStorage.getItem("username")) {
+      window.location = "login.html";
+    }
+
+    document.getElementById("user").innerText =
+      localStorage.getItem("username");
+
+    function logout() {
+      localStorage.clear();
+      window.location = "login.html";
+    }
+
+    loadSlots();
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+      localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light") ? "light" : "dark"
+      );
+    }
+
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light");
+    }
+  </script>
   <canvas id="bg"></canvas>
   <script>
     const canvas = document.getElementById("bg");
