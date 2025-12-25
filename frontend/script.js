@@ -1,5 +1,5 @@
 function loadSlots() {
-  fetch("http://localhost:3000/slots")
+  fetch("https://smart-appointment-system.onrender.com/slots")
     .then(res => res.json())
     .then(data => {
       const div = document.getElementById("slots");
@@ -44,7 +44,7 @@ function book(id, btn) {
   btn.disabled = true;
   btn.innerText = "Booking...";
 
-  fetch(`http://localhost:3000/book/${id}`, {
+  fetch(`https://smart-appointment-system.onrender.com/book/${id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username })

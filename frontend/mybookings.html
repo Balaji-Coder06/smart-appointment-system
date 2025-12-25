@@ -23,7 +23,7 @@
     const user = localStorage.getItem("username");
     if (!user) window.location = "login.html";
 
-    fetch(`http://localhost:3000/my-bookings/${user}`)
+    fetch(`https://smart-appointment-system.onrender.com/my-bookings/${user}`)
       .then(res => res.json())
       .then(data => {
         const list = document.getElementById("list");
@@ -45,7 +45,7 @@
       });
 
     function cancel(slotId) {
-      fetch("http://localhost:3000/cancel-booking", {
+      fetch("https://smart-appointment-system.onrender.com/cancel-booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

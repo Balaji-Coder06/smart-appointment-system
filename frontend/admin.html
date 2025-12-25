@@ -42,7 +42,7 @@
     }
 
     function loadStats() {
-      fetch("http://localhost:3000/admin/stats")
+      fetch("https://smart-appointment-system.onrender.com/admin/stats")
         .then(res => res.json())
         .then(data => {
           document.getElementById("stats").innerHTML = `
